@@ -34,37 +34,40 @@
 
 ## 🏗️ System Architecture
 
+
 ```mermaid
 graph TD
-    subgraph Frontend Client
-        UI[React 18 + Vite Web App]
-        Map[Leaflet Digital Twin Map]
-        ESG[ESG & Compliance Dashboard]
-        WSClient[WebSocket Listener]
+    subgraph Frontend["Frontend Client"]
+        UI["React 18 + Vite Web App"]
+        Map["Leaflet Digital Twin Map"]
+        ESG["ESG & Compliance Dashboard"]
+        WSClient["WebSocket Listener"]
     end
 
-    subgraph Backend Core (FastAPI)
-        API[FastAPI REST & WS Endpoints]
-        Sim[Background Simulation Loop]
-        CV[CV & Dark-Patch Analyzer]
-        Path[NetworkX TSP Route Optimizer]
-        ESGEng[ESG Metric Calculator]
-        PDFGen[ReportLab PDF Engine]
+    subgraph Backend["Backend Core (FastAPI)"]
+        API["FastAPI REST & WS Endpoints"]
+        Sim["Background Simulation Loop"]
+        CV["CV & Dark-Patch Analyzer"]
+        Path["NetworkX TSP Route Optimizer"]
+        ESGEng["ESG Metric Calculator"]
+        PDFGen["ReportLab PDF Engine"]
     end
 
-    subgraph Database
-        DB[(SQLite / SQLModel autolight.db)]
+    subgraph Database["Database"]
+        DB[("SQLite / SQLModel autolight.db")]
     end
 
-    UI -->|REST Requests| API
-    UI -->|Live Feeds| WSClient
-    API <-->|SQLModel| DB
-    API <-->|WebSocket Stream| WSClient
-    Sim -->|Grid Ramping & Faults| DB
-    CV -->|Synthetic Frames & Dark Patch| API
-    Path -->|Haversine Graph Solve| DB
-    ESGEng -->|Calculate Savings| DB
-    PDFGen -->|PDF Report Byte Stream| API
+    UI -->|"REST Requests"| API
+    UI -->|"Live Feeds"| WSClient
+    API -->|"SQLModel Queries"| DB
+    DB -->|"Pole & Ticket Data"| API
+    API -->|"WebSocket Stream"| WSClient
+    Sim -->|"Grid Ramping & Faults"| DB
+    CV -->|"Synthetic Frames & Dark Patch"| API
+    Path -->|"Haversine Graph Solve"| DB
+    ESGEng -->|"Calculate Savings"| DB
+    PDFGen -->|"PDF Report Byte Stream"| API
+```
 
 
 
