@@ -2,6 +2,8 @@
 
 **AutoLight-Civic** is an AI-driven, next-generation Smart City Municipal Streetlighting and Automated Maintenance Operations Platform. Designed for modern urban municipal corporations, AutoLight replaces traditional static streetlights with adaptive PWM dimming mesh networks, automated Computer Vision (YOLO) fault detection, graph-based maintenance crew routing (NetworkX TSP), and comprehensive ESG/Carbon footprint telemetry with downloadable municipal compliance reports.
 
+
+
 ## 🌟 Key Features
 
 ### 1. ⚡ Adaptive Municipal Streetlighting Mesh
@@ -27,3 +29,39 @@
 - Built with **React 18**, **Leaflet**, and **Recharts**.
 - Full WebSocket support (`/ws`) for live bidirectional telemetry updates and grid state streaming.
 - Built-in **Simulation Control Panel** for live demoing: inject traffic motion, trigger fixture faults, adjust weather parameters, and toggle emergency overrides.
+
+
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    subgraph Frontend Client
+        UI[React 18 + Vite Web App]
+        Map[Leaflet Digital Twin Map]
+        ESG[ESG & Compliance Dashboard]
+        WSClient[WebSocket Listener]
+    end
+
+    subgraph Backend Core (FastAPI)
+        API[FastAPI REST & WS Endpoints]
+        Sim[Background Simulation Loop]
+        CV[CV & Dark-Patch Analyzer]
+        Path[NetworkX TSP Route Optimizer]
+        ESGEng[ESG Metric Calculator]
+        PDFGen[ReportLab PDF Engine]
+    end
+
+    subgraph Database
+        DB[(SQLite / SQLModel autolight.db)]
+    end
+
+    UI -->|REST Requests| API
+    UI -->|Live Feeds| WSClient
+    API <-->|SQLModel| DB
+    API <-->|WebSocket Stream| WSClient
+    Sim -->|Grid Ramping & Faults| DB
+    CV -->|Synthetic Frames & Dark Patch| API
+    Path -->|Haversine Graph Solve| DB
+    ESGEng -->|Calculate Savings| DB
+    PDFGen -->|PDF Report Byte Stream| API
